@@ -1,5 +1,7 @@
-在Windows11上使用主软件Kubernetes，kubectl.exe版本为1.32.6，Kustomize采用kubectl内置版本。辅助工具包括PowerShell7、Python3.12和UTF-8文本编辑器；Python用于读取CSV、JSON与YAML并导出静态记录。
+操作系统： Windows11。
 
-输入目录保持只读，结果写入单独目录。处理过程不读取kubeconfig，不连接Kubernetes API Server，也不执行apply。软件安装时可以联网，开始构建清单后不访问外部服务。kubectl与Kubernetes按ApacheLicense2.0使用。
+主软件为Kubernetes客户端kubectl.exe1.32.6，使用它内置的Kustomize构建双栈Service与EndpointSlice候选清单。PowerShell7负责调用命令，Python3.12读取CSV、JSON和YAML并整理静态记录，没有其它代码执行依赖。
 
-开始前需要确认kubectl kustomize能够工作，并为结果目录预留写入权限。业务风险主要是改动旧Service的ClusterIP、在一张EndpointSlice中混用地址族、标签或端口与新Service不一致，或把未就绪的IPv6后端写成可用；这些内容都要从最终渲染结果检查。
+普通x64CPU即可完成本地清单工作，不需要GPU。可写磁盘需容纳解压后的输入、Kustomize目录、渲染清单和发布记录。构建环节不另设业务超时，现场应用与观察时限由发布顺序材料决定。输入目录保持只读，结果写入单独目录。
+
+软件安装时可以联网，构建范围是本地输入和结果目录。需要留意旧Service的ClusterIP、EndpointSlice地址族、标签和端口引用；现场管理员根据候选清单继续处理地址分配和网络连通。
