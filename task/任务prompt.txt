@@ -1,0 +1,7 @@
+支付查询服务将在周末增加双栈入口。旧客户端仍依赖现有IPv4Service，直接改动会影响账务查询；新客户端需要并行入口读取IPv4和IPv6后端。使用Kubernetes的kubectl与Kustomize，工作环境为Windows11。
+
+工作目录里有现行Service清单、后端地址表和发布规则。现行文件与地址表保持原样，输出中不要出现真实集群地址、kubeconfig或访问凭据。
+
+保留旧入口的名称、ClusterIP、端口和单栈策略。新入口采用无selector的双栈无头Service，IPv4与IPv6后端分开写入EndpointSlice，并通过标签关联新Service。Kustomize构建完成后，核对对象身份、地址族、端口、就绪状态和应用顺序。
+
+现场管理员会先查看旧入口差异，再按发布顺序应用新清单。提交内容要让他能找到Kustomize入口、渲染结果、对象与端点记录、旧入口对照、发布顺序和现场核查事项。本地结果不能写成ClusterIP已经分配、控制器已经生成切片或双栈网络已经连通。

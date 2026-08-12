@@ -1,0 +1,6 @@
+1.用kubectl读取现行Service清单，记录名称、ClusterIP、端口、ipFamilies和ipFamilyPolicy。
+2.参照publish-policy.json编写双栈无头Service，保持selector为空并设置两种地址族。
+3.按backend-addresses.csv分别建立IPv4和IPv6EndpointSlice，配置服务标签、端口与端点状态。
+4.把旧入口、新Service和两张EndpointSlice加入kustomization.yaml，通过kubectl kustomize生成完整YAML。
+5.从渲染结果导出对象与端点记录，对照现行清单检查旧入口差异和新对象引用。
+6.生成发布顺序与现场核查记录，明确ClusterIP、对象状态、解析和连通性留待集群确认。

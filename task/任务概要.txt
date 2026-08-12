@@ -1,0 +1,1 @@
+支付平台准备新增双栈查询入口，同时保留旧客户端使用的IPv4Service。使用Kubernetes的kubectl与Kustomize编排无头Service和分族EndpointSlice，从本地渲染清单核对旧入口字段、地址族、标签和发布顺序，供现场管理员进入维护窗口。

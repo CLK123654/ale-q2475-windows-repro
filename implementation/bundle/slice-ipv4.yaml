@@ -1,0 +1,23 @@
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: payment-ledger-dual-ipv4
+  namespace: payments
+  labels:
+    kubernetes.io/service-name: payment-ledger-dual
+addressType: IPv4
+ports:
+  - name: grpc
+    protocol: TCP
+    port: 8443
+endpoints:
+  - addresses:
+      - 10.42.7.21
+    conditions:
+      ready: true
+    zone: zone-a
+  - addresses:
+      - 10.42.8.34
+    conditions:
+      ready: true
+    zone: zone-b
